@@ -1,21 +1,33 @@
-@import "~bootstrap/scss/bootstrap";
+@import '~bootstrap/scss/bootstrap';
+@import url(//fonts.googleapis.com/css?family=Open+Sans:600,400&subset=latin,cyrillic);
+
+.App {
+  padding-top: 50vh;
+  transition: transform 400ms ease !important;
+  transform: translateY(0);
+}
 
 .flexContainer {
   display: flex;
   justify-content: center;
-  align-items: center;
-  border-bottom: 1px solid black;
-  
-}
-
-.inputStyle{
-  font-size: 1.5em;
-  padding: 3px;
-  display: inline-block;
-  width: 30%;
+  margin-bottom: 5%;
+  .buttonStyle {
+    width: fit-content;
+    flex: 0 auto;
+  }
+  .inputStyle {
+    font-size: 1.5em;
+    padding: 3px;
+    display: inline-block;
+    width: 30%;
+  }
 }
 
 .flexImagelist {
   display: flex;
   flex-wrap: wrap;
+}
+
+.inputCenter {
+  transform: translateY(-45vh);
 }
