@@ -1,19 +1,17 @@
-import React from 'react';
-import './App.scss';
-import SearchBar from './components/SearchBar';
-import { ImgSearchState } from './context/ImgSearchState';
-import Images from './components/Images';
+import React from 'react'
+/* Components */
+import SearchBar from './components/SearchBar'
+import Images from './components/Images'
+/* styles */
+import './App.scss'
 
 function App() {
-  
-  return ( 
-    <ImgSearchState >
-      <div className = "App" >
-        <SearchBar />
-        <Images />
-      </div>       
-    </ImgSearchState>
-  );
+  return (
+    <div className='App'>
+      <SearchBar />
+      <Images />
+    </div>
+  )
 }
 
-export default App;
+export default App

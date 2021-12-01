@@ -1,39 +1,44 @@
-import React, {useEffect, useContext} from 'react';
-import { ImgSearchContext } from './../context/imgSearchContext';
-import Loading from './Loading';
+import React, {useRef, useEffect} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+
+import {fetchImages} from 'redux/slices/images.asyncActions'
+
+import Loading from './Loading'
 import Figure from 'react-bootstrap/Figure'
-import InfiniteScroll from 'react-infinite-scroller';
-import HistoryTable from './HistoryTable';
+import InfiniteScroll from 'react-infinite-scroller'
 
-let page = 1;
 const Images = () => {
-  const imgSearch = useContext(ImgSearchContext)
+  const pageNumber = useRef(1)
+  const dispatch = useDispatch()
+  const {allPhotos: images} = useSelector(({images}) => images)
 
-  if (!imgSearch.photos.hits) {return (<HistoryTable />)}
+  const getMorePhotos = async () => {
+    pageNumber.current++
+    dispatch(fetchImages({page: pageNumber.current}))
+  }
 
-const getMorePhotos = async () => {
-    page++;
-    imgSearch.getPhotos(imgSearch.qw, page)
-    }
+  if (!images) {
+    return
+  }
 
-return (
-  <div>
-    <HistoryTable imgHistory={imgSearch.imgHistory}/>
-    <InfiniteScroll 
-      pageStart={page} 
-      loadMore={getMorePhotos}
-      hasMore={imgSearch.photos.totalHits > imgSearch.photos.hits.length} 
-      threshold={100}>
-        <div className="flexImagelist">
-            {imgSearch.photos.hits.map((i, index) =>
-            <Figure key={index}>
-                <Figure.Image width={window.innerWidth / 3} src={i.previewURL} />
+  return (
+    <div>
+      <InfiniteScroll
+        pageStart={pageNumber}
+        loadMore={getMorePhotos}
+        hasMore={images?.allPhotos?.totalHits > images?.allPhotos?.hits?.length}
+        threshold={100}
+      >
+        <div className='flexImagelist'>
+          {images?.hits?.map((picture, index) => (
+            <Figure key={`${picture.id}-${index}`}>
+              <Figure.Image width={window.innerWidth / 3} src={picture?.previewURL} />
             </Figure>
-            )}
+          ))}
         </div>
-    </InfiniteScroll>
-</div>
-)
+      </InfiniteScroll>
+    </div>
+  )
 }
 
-export default Images;
+export default Images

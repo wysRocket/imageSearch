@@ -1,40 +1,29 @@
-import React, {useState, useContext} from 'react';
-import { ImgSearchContext } from '../context/imgSearchContext';
-import {NavLink} from "react-router-dom";
+import React, {useState} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import {fetchImages} from 'redux/slices/images.asyncActions'
 
 const SearchBar = () => {
   const [value, setValue] = useState('')
-  const imgSearch = useContext(ImgSearchContext)
+  const dispatch = useDispatch()
 
-const onFormSubmit = (event) => {
-  event.preventDefault()
+  const onFormSubmit = event => {
+    event.preventDefault()
+    value.trim() && dispatch(fetchImages({qw: value?.trim()}))
+  }
 
-  if (value.trim()) {
-    imgSearch.setPhotos(value.trim()).then(() => {
-    imgSearch.setQW(value)
-    
-}).catch(()=> {
-
-})
-//setValue('')
-}
-}
-
-return (
-<div>
-  <form onSubmit={onFormSubmit} 
-    className="flexContainer">
-      <label>
-        <h2>Image Search: </h2>
-      </label>
-        <input className="inputStyle" 
-        type="text" 
-        value={value} 
-        onChange={e => setValue(e.target.value)} />
-        
-  </form>
-</div>
-)
+  return (
+    <div>
+      <form onSubmit={onFormSubmit} className='flexContainer'>
+        <input
+          className='inputStyle'
+          type='text'
+          value={value}
+          onChange={e => setValue(e.target.value)}
+        />
+        <button>Search</button>
+      </form>
+    </div>
+  )
 }
 
-export default SearchBar;
+export default SearchBar
