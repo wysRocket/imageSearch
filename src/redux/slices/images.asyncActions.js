@@ -12,6 +12,7 @@ export const fetchImages = createAsyncThunk(
 
     return await imgSearchAPI
       .fetchPhotos(payload)
+      .then(res => res?.data?.hits.map(imgObj => ({...imgObj, favorite: false})))
       .catch(err => dispatch(notifyError(err?.message || 'Something went wrong...')))
       .finally(() => dispatch(toggleIsLoading(false)))
   }

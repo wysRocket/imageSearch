@@ -23,6 +23,7 @@ export const CardsContainer = styled.div`
 export const OverlayWrapper = styled.div`
   background: darkGrey;
   transition: all 800ms ease-in-out;
+
   &.slide-enter {
     transform: translateY(75vh);
   }

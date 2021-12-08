@@ -9,6 +9,6 @@ const KEY = '11370902-19d6d747d66b3dd76f6049b2b'
 export const imgSearchAPI = {
   fetchPhotos(payload) {
     const {qw = '', page = 1} = payload
-    return qw && instance.get(`?key=${KEY}&q=${qw}&page=${page}`).then(res => res?.data)
+    return qw && instance.get(`?key=${KEY}&q=${qw}&page=${page}`)
   },
 }
